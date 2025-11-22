@@ -68,7 +68,7 @@
         
         /* Hero Section */
         .hero {
-            background: linear-gradient(135deg, rgba(10, 77, 143, 0.80) 0%, rgba(30, 136, 229, 0.95) 100%),
+            background: linear-gradient(135deg, rgba(10, 77, 143, 0.95) 0%, rgba(30, 136, 229, 0.95) 100%),
                         url('https://raw.githubusercontent.com/gongdae3dot0/test1-npu/main/0003.png') center/cover;
             color: white;
             padding: 100px 0 80px;
@@ -216,7 +216,7 @@
         }
         
         .highlight-box p {
-            font-size: 18px;
+            font-size: 16px;
             line-height: 1.8;
             color: white;
         }
@@ -248,6 +248,8 @@
             border-radius: 20px;
             box-shadow: 0 5px 20px rgba(0,0,0,0.4);
             border: 1px solid rgba(66, 165, 245, 0.3);
+            max-width: 900px;
+            margin: 0 auto;
         }
         
         .curriculum-item {
@@ -362,9 +364,8 @@
         /* CTA Section */
         .final-cta {
             padding: 80px 0;
-            /*background: linear-gradient(135deg, #0a4d8f 0%, #1e88e5 100%),*/
-            background: linear-gradient(135deg, rgba(10, 77, 143, 0.85) 0%, rgba(30, 136, 229, 0.85) 100%),                
-                        url('https://raw.githubusercontent.com/gongdae3dot0/test1-npu/main/0005.png') center/cover;
+            background: linear-gradient(135deg, rgba(10, 77, 143, 0.40) 0%, rgba(30, 136, 229, 0.40) 100%),
+                        url('https://raw.githubusercontent.com/gongdae3dot0/test1-npu/main/0006.png') center/cover;
             background-blend-mode: overlay;
             color: white;
             text-align: center;
@@ -435,6 +436,22 @@
             .problem-grid, .info-grid {
                 grid-template-columns: 1fr;
             }
+            
+            .curriculum-list {
+                padding: 20px;
+            }
+            
+            .curriculum-item {
+                padding: 20px;
+            }
+            
+            .highlight-box {
+                padding: 25px;
+            }
+            
+            .highlight-box p {
+                font-size: 15px;
+            }
         }
         
         /* Animation */
@@ -496,7 +513,7 @@
             </div>
             
             <div class="highlight-box" style="margin-top: 60px;">
-                <h3>🧑‍🏫👨‍🏫 공대삼쩜영이 취준생에게</h3>
+                <h3>🧑‍🏫 공대삼쩜영이 취준생에게</h3>
                 <p><strong>현업에선 말이야. 모든 개념을 완벽하게 배우고 시작하지 않아.</strong><br>
                     오히려 모르는 상태로 일단 부딪히면서 배우는게 훨씬 많지.<br>
                     칩 설계 구조도 제대로 모르는 상태에서 디버깅을 시작해.<br>
@@ -608,16 +625,14 @@
 
     <section class="final-cta" id="apply">
         <div class="container">
-            <h2>딱 두 달만,<br>
-                현업처럼 부딪혀보는<br>
-                프로젝트.</h2>
+            <h2>딱 두 달만, 현업처럼 부딪혀보는 프로젝트.</h2>
             <p style="font-size: 20px; margin: 20px 0; opacity: 0.95;">
                 반도체 회로설계, 단기교육과 장기교육 사이에서 고민하고 계신가요?<br>
                 그렇다면 선택지는 하나입니다.
             </p>
             <a href="https://smartstore.naver.com/gongdae3_0/products/12435073029" class="cta-button-large">지금 신청하기 →</a>
             <p style="font-size: 16px; margin-top: 30px; opacity: 0.9;">
-                📩 문의: gongdae3.0@gmail.com<br>
+                📩 문의: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5d3a32333a393c386e736d1d3a303c3431733e3230">[email&#160;protected]</a><br>
                 💬 <a href="https://open.kakao.com/o/sZ1Dm4zf" style="color: #ffc107; text-decoration: underline; font-weight: 600;">카카오톡 오픈채팅으로 문의하기</a>
             </p>
         </div>
@@ -632,7 +647,7 @@
         </div>
     </footer>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         // Smooth scroll for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -663,12 +678,4 @@
         }, observerOptions);
 
         // Apply animation to sections
-        document.querySelectorAll('.problem-card, .curriculum-item, .info-card').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(30px)';
-            el.style.transition = 'all 0.6s ease-out';
-            observer.observe(el);
-        });
-    </script>
-</body>
-</html>
+        document.querySelectorAll('.problem-card, .curriculum-item, .info-card').forEa
