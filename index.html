@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mini-NPU Core RTL 설계 및 검증 스터디 | 공대삼쩜영</title>
+    <title>Mini-NPU Core RTL<br> 설계 및 검증 스터디 | 공대삼쩜영</title>
     <meta name="description" content="딱 두 달, 현업처럼 부딪혀보십시오. Mini-NPU Core를 직접 설계하고 검증하는 실전 프로젝트">
     <style>
         * {
@@ -17,6 +17,7 @@
             line-height: 1.6;
             color: #333;
             background-color: #0a1929;
+            text-align: center;
         }
         
         .container {
@@ -67,7 +68,7 @@
         
         /* Hero Section */
         .hero {
-            background: linear-gradient(135deg, rgba(10, 77, 143, 0.95) 0%, rgba(30, 136, 229, 0.95) 100%),
+            background: linear-gradient(135deg, rgba(10, 77, 143, 0.80) 0%, rgba(30, 136, 229, 0.95) 100%),
                         url('https://raw.githubusercontent.com/gongdae3dot0/test1-npu/main/0003.png') center/cover;
             color: white;
             padding: 100px 0 80px;
@@ -75,18 +76,6 @@
             position: relative;
             overflow: hidden;
         }
-        
-        /*.hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('https://raw.githubusercontent.com/gongdae3dot0/test1-npu/main/002.png') center/cover;
-            opacity: 0.15;
-            z-index: 0;
-        }*/
         
         .hero > .container {
             position: relative;
@@ -157,6 +146,7 @@
             box-shadow: 0 5px 20px rgba(0,0,0,0.4);
             transition: transform 0.3s ease;
             border: 1px solid rgba(66, 165, 245, 0.3);
+            text-align: center;
         }
         
         .problem-card:hover {
@@ -189,18 +179,6 @@
             position: relative;
         }
         
-        /*.solution-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('https://raw.githubusercontent.com/gongdae3dot0/test1-npu/main/004.png') center/cover;
-            opacity: 0.08;
-            z-index: 0;
-        }*/
-        
         .solution-section > .container {
             position: relative;
             z-index: 1;
@@ -218,6 +196,7 @@
             margin: 40px 0;
             box-shadow: 0 10px 30px rgba(30, 136, 229, 0.4);
             border: 2px solid rgba(66, 165, 245, 0.3);
+            text-align: center;
         }
         
         .highlight-box h3 {
@@ -232,18 +211,14 @@
         
         .highlight-box li {
             padding: 10px 0;
-            padding-left: 30px;
             position: relative;
             font-size: 18px;
         }
         
-        .highlight-box li:before {
-            content: "✓";
-            position: absolute;
-            left: 0;
-            color: #ffc107;
-            font-weight: bold;
-            font-size: 20px;
+        .highlight-box p {
+            font-size: 18px;
+            line-height: 1.8;
+            color: white;
         }
         
         /* Interview Quote */
@@ -258,6 +233,7 @@
             font-style: italic;
             color: #ffffff;
             box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            text-align: center;
         }
         
         /* Curriculum Section */
@@ -282,6 +258,7 @@
             border-radius: 8px;
             transition: all 0.3s ease;
             color: white;
+            text-align: center;
         }
         
         .curriculum-item:hover {
@@ -355,6 +332,7 @@
             border-radius: 20px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.4);
             border: 2px solid rgba(66, 165, 245, 0.3);
+            text-align: center;
         }
         
         .original-price {
@@ -384,25 +362,14 @@
         /* CTA Section */
         .final-cta {
             padding: 80px 0;
-            background: linear-gradient(135deg, #0a4d8f 0%, #1e88e5 100%),
-                        url('https://raw.githubusercontent.com/gongdae3dot0/test1-npu/main/0006.png') center/cover;
+            /*background: linear-gradient(135deg, #0a4d8f 0%, #1e88e5 100%),*/
+            background: linear-gradient(135deg, rgba(10, 77, 143, 0.85) 0%, rgba(30, 136, 229, 0.85) 100%),                
+                        url('https://raw.githubusercontent.com/gongdae3dot0/test1-npu/main/0005.png') center/cover;
             background-blend-mode: overlay;
             color: white;
             text-align: center;
             position: relative;
         }
-        
-        /*.final-cta::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('https://raw.githubusercontent.com/gongdae3dot0/test1-npu/main/006.png') center/cover;
-            opacity: 0.1;
-            z-index: 0;
-        }*/
         
         .final-cta > .container {
             position: relative;
@@ -529,30 +496,29 @@
             </div>
             
             <div class="highlight-box" style="margin-top: 60px;">
-                <h3>🏢 실제 현업에서는 이렇게 가르칩니다</h3>
-                <ul>
-                    <p><strong>현업에선 말이야. 모든 개념을 완벽하게 배우고 시작하지 않아.</strong><br>
-                        오히려 모르는 상태로 일단 부딪히면서 배우는게 훨씬 많지.<br>
-                        칩 설계 구조도 제대로 모르는 상태에서 디버깅을 시작해.<br>
-                        신호를 따라가다 보면 자연스럽게 구조를 익히게 되고<br>
-                        필요한 개념은 그때그때 찾아보면서 채우는 거야.<br>
-                        <br>
-                        <strong>나도 Verilog 제로 베이스에서 시작했어.</strong><br>
-                        입사 후에는 실무 코드 분석과 기초 문법 학습을 병행하면서 빠르게 익혔고,<br>
-                        시간이 지나니까 그게 정말 효율적인 방식이었다는 걸 실감하게 되더라고.<br>
-                        심지어 입사 1~2년 만에 성과를 내면서 가장 높은 인사고과를 받기도 했어.<br>
-                        신입이 가장 높은 고과를 받는다는 건 진짜 쉽지 않은 일인데<br>
-                        그만큼 실무에 빠르게 적응했다는 증거지.<br>
-                        <br>
-                        <strong>지금부터 딱 한달 동안 현업처럼 트레이닝 시켜줄게.</strong><br>
-                        이론부터 프로젝트까지 전부 커버할거야.<br>
-                        단순히 툴을 만지는 경험이 아니라,<br>
-                        회로설계 엔지니어가 실제로 하는 설계와 디버깅을 직접 해볼 수 있는 프로그램도 제공할 거야.<br>
-                        프로젝트 결과물은 그대로 네 개인 이력으로 연결되고,<br>
-                        자소서나 면접에서 자신 있게 꺼낼 수 있는 고퀄리티 이력으로 남을 거야.<br>
-                        - 공대삼쩜영 -<br>
-                    </p>
-                </ul>
+                <h3>🧑‍🏫👨‍🏫 공대삼쩜영이 취준생에게</h3>
+                <p><strong>현업에선 말이야. 모든 개념을 완벽하게 배우고 시작하지 않아.</strong><br>
+                    오히려 모르는 상태로 일단 부딪히면서 배우는게 훨씬 많지.<br>
+                    칩 설계 구조도 제대로 모르는 상태에서 디버깅을 시작해.<br>
+                    신호를 따라가다 보면 자연스럽게 구조를 익히게 되고<br>
+                    필요한 개념은 그때그때 찾아보면서 채우는 거야.<br>
+                    <br>
+                    <strong>나도 Verilog 제로 베이스에서 시작했어.</strong><br>
+                    입사 후에는 실무 코드 분석과 기초 문법 학습을 병행하면서 빠르게 익혔고,<br>
+                    시간이 지나니까 그게 정말 효율적인 방식이었다는 걸 실감하게 되더라고.<br>
+                    심지어 입사 1~2년 만에 성과를 내면서 가장 높은 인사고과를 받기도 했어.<br>
+                    신입이 가장 높은 고과를 받는다는 건 진짜 쉽지 않은 일인데<br>
+                    그만큼 실무에 빠르게 적응했다는 증거지.<br>
+                    <br>
+                    <strong>지금부터 딱 한달 동안 현업처럼 트레이닝 시켜줄게.</strong><br>
+                    이론부터 프로젝트까지 전부 커버할거야.<br>
+                    단순히 툴을 만지는 경험이 아니라,<br>
+                    회로설계 엔지니어가 실제로 하는 설계와 디버깅을 직접 해볼 수 있는 프로그램도 제공할 거야.<br>
+                    프로젝트 결과물은 그대로 네 개인 이력으로 연결되고,<br>
+                    자소서나 면접에서 자신 있게 꺼낼 수 있는 고퀄리티 이력으로 남을 거야.<br>
+                    <br>
+                    - 공대삼쩜영 -<br>
+                </p>
             </div>
         </div>
     </section>
@@ -560,7 +526,7 @@
     <section class="solution-section">
         <div class="container">
             <h2 class="section-title">그래서 준비했습니다</h2>
-            <p style="text-align: center; font-size: 20px; color: #666; margin-bottom: 40px;">
+            <p style="text-align: center; font-size: 20px; color: #e0e0e0; margin-bottom: 40px;">
                 딱 두 달 동안, 현업 방식 그대로<br>
                 Mini-NPU Core를 직접 설계하고 검증해보는 과정
             </p>            
@@ -573,7 +539,6 @@
                 <p>"저는 NPU Core를 직접 설계하고 검증해본 경험이 있습니다."</p>
                 <p style="margin-top: 20px;">"2x2 Systolic MAC, Controller를 아우르는 전체 data-path를 설계하였고,<br>Testbench를 직접 구현하여 AMBA APB 환경에서 검증하였습니다."</p>
             </div>
-
         </div>
     </section>
 
@@ -643,7 +608,9 @@
 
     <section class="final-cta" id="apply">
         <div class="container">
-            <h2>딱 두 달만, 현업처럼 부딪혀보는 프로젝트.</h2>
+            <h2>딱 두 달만,<br>
+                현업처럼 부딪혀보는<br>
+                프로젝트.</h2>
             <p style="font-size: 20px; margin: 20px 0; opacity: 0.95;">
                 반도체 회로설계, 단기교육과 장기교육 사이에서 고민하고 계신가요?<br>
                 그렇다면 선택지는 하나입니다.
