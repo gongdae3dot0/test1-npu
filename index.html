@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mini-NPU Core RTL<br> 설계 및 검증 스터디 | 공대삼쩜영</title>
+    <title>Mini-NPU Core RTL 설계 및 검증 스터디 | 공대삼쩜영</title>
     <meta name="description" content="딱 두 달, 현업처럼 부딪혀보십시오. Mini-NPU Core를 직접 설계하고 검증하는 실전 프로젝트">
     <style>
         * {
@@ -13,10 +13,10 @@
         }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Malgun Gothic", "맑은 고딕", "Apple SD Gothic Neo", sans-serif;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, "Malgun Gothic", "맑은 고딕", "Apple SD Gothic Neo", sans-serif;
             line-height: 1.6;
-            color: #333;
-            background-color: #0a1929;
+            color: #e8eaed;
+            background: #0b0c10;
             text-align: center;
         }
         
@@ -28,14 +28,15 @@
         
         /* Header */
         header {
-            background: linear-gradient(135deg, #0a4d8f 0%, #1e88e5 100%);
+            background: linear-gradient(135deg, #1a1d29 0%, #0b0c10 100%);
             color: white;
             padding: 20px 0;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 30px rgba(212, 175, 55, 0.1);
             position: sticky;
             top: 0;
             z-index: 1000;
-            border-bottom: 2px solid #42a5f5;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+            backdrop-filter: blur(10px);
         }
         
         .header-content {
@@ -48,33 +49,61 @@
             font-size: 24px;
             font-weight: 700;
             letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #d4af37 0%, #f4e5b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         
         .cta-button {
-            background-color: #fff;
-            color: #0a4d8f;
+            background: linear-gradient(135deg, #d4af37 0%, #c9a033 100%);
+            color: #0b0c10;
             padding: 12px 30px;
-            border-radius: 25px;
+            border-radius: 30px;
             text-decoration: none;
             font-weight: 600;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.3);
         }
         
         .cta-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            box-shadow: 0 6px 30px rgba(212, 175, 55, 0.5);
         }
         
         /* Hero Section */
         .hero {
-            background: linear-gradient(135deg, rgba(10, 77, 143, 0.95) 0%, rgba(30, 136, 229, 0.95) 100%),
-                        url('https://raw.githubusercontent.com/gongdae3dot0/test1-npu/main/0003.png') center/cover;
+            background: linear-gradient(135deg, #1a1d29 0%, #2d3142 50%, #1a1d29 100%);
             color: white;
-            padding: 100px 0 80px;
+            padding: 120px 0 100px;
             text-align: center;
             position: relative;
             overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(212, 175, 55, 0.05) 0%, transparent 50%);
+            z-index: 0;
+        }
+        
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                linear-gradient(90deg, transparent 0%, rgba(212, 175, 55, 0.05) 50%, transparent 100%);
+            z-index: 0;
         }
         
         .hero > .container {
@@ -83,293 +112,350 @@
         }
         
         .hero h1 {
-            font-size: 48px;
+            font-size: 56px;
             font-weight: 800;
             margin-bottom: 20px;
             line-height: 1.2;
+            background: linear-gradient(135deg, #ffffff 0%, #d4af37 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         
         .hero .subtitle {
             font-size: 24px;
             margin-bottom: 15px;
-            opacity: 0.95;
+            opacity: 0.9;
+            color: #c5c8cd;
         }
         
         .hero .tagline {
             font-size: 32px;
             font-weight: 600;
             margin: 30px 0;
-            padding: 20px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 10px;
+            padding: 25px 40px;
+            background: rgba(212, 175, 55, 0.1);
+            border-radius: 15px;
             display: inline-block;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(212, 175, 55, 0.3);
         }
         
         .badge {
             display: inline-block;
-            background-color: #ffc107;
-            color: #333;
-            padding: 8px 16px;
-            border-radius: 20px;
+            background: linear-gradient(135deg, #d4af37 0%, #c9a033 100%);
+            color: #0b0c10;
+            padding: 10px 20px;
+            border-radius: 25px;
             font-weight: 600;
             margin: 10px 5px;
             font-size: 14px;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
         }
         
         /* Problem Section */
         .problem-section {
-            padding: 80px 0;
-            background: linear-gradient(180deg, #132f4c 0%, #1a1d29 100%);
+            padding: 100px 0;
+            background: linear-gradient(180deg, #0b0c10 0%, #1a1d29 100%);
+            position: relative;
         }
         
         .section-title {
             text-align: center;
-            font-size: 36px;
+            font-size: 42px;
             font-weight: 700;
-            margin-bottom: 50px;
-            color: #ffffff;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-        }
-        
-        .problem-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-        
-        .problem-card {
-            background: linear-gradient(135deg, #1e3a5f 0%, #2d5a8a 100%);
-            color: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.4);
-            transition: transform 0.3s ease;
-            border: 1px solid rgba(66, 165, 245, 0.3);
-            text-align: center;
-        }
-        
-        .problem-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 30px rgba(30, 136, 229, 0.4);
-            border-color: rgba(66, 165, 245, 0.6);
-        }
-        
-        .problem-card h3 {
-            font-size: 20px;
-            margin-bottom: 15px;
-            color: #42a5f5;
-        }
-        
-        .problem-card p {
-            color: rgba(255, 255, 255, 0.9);
-        }
-        
-        .problem-card .icon {
-            font-size: 40px;
-            margin-bottom: 15px;
-        }
-        
-        /* Solution Section */
-        .solution-section {
-            padding: 80px 0;
-            background: linear-gradient(180deg, #1a1d29 0%, #0f1419 100%),
-                        url('https://raw.githubusercontent.com/gongdae3dot0/test1-npu/main/0002.png') center/cover;
-            background-blend-mode: overlay;
-            position: relative;
-        }
-        
-        .solution-section > .container {
+            margin-bottom: 60px;
+            background: linear-gradient(135deg, #ffffff 0%, #d4af37 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             position: relative;
             z-index: 1;
         }
         
-        .solution-section p {
-            color: #e0e0e0;
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+            position: relative;
+            z-index: 1;
         }
         
-        .highlight-box {
-            background: linear-gradient(135deg, #0a4d8f 0%, #1e88e5 100%);
+        .problem-card {
+            background: linear-gradient(135deg, #1a1d29 0%, #2d3142 100%);
             color: white;
             padding: 40px;
             border-radius: 20px;
-            margin: 40px 0;
-            box-shadow: 0 10px 30px rgba(30, 136, 229, 0.4);
-            border: 2px solid rgba(66, 165, 245, 0.3);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            transition: all 0.4s ease;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            text-align: center;
+        }
+        
+        .problem-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 50px rgba(212, 175, 55, 0.3);
+            border-color: rgba(212, 175, 55, 0.5);
+        }
+        
+        .problem-card h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: #d4af37;
+        }
+        
+        .problem-card p {
+            color: #c5c8cd;
+            font-size: 16px;
+            line-height: 1.7;
+        }
+        
+        .problem-card .icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            filter: grayscale(30%);
+        }
+        
+        /* Solution Section */
+        .solution-section {
+            padding: 100px 0;
+            background: linear-gradient(180deg, #1a1d29 0%, #0b0c10 100%);
+            position: relative;
+        }
+        
+        .solution-section p {
+            color: #c5c8cd;
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, #2d3142 0%, #1a1d29 100%);
+            color: white;
+            padding: 50px;
+            border-radius: 25px;
+            margin: 50px auto;
+            max-width: 900px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.5);
+            border: 1px solid rgba(212, 175, 55, 0.3);
             text-align: center;
         }
         
         .highlight-box h3 {
-            font-size: 28px;
-            margin-bottom: 20px;
-        }
-        
-        .highlight-box ul {
-            list-style: none;
-            padding-left: 0;
-        }
-        
-        .highlight-box li {
-            padding: 10px 0;
-            position: relative;
-            font-size: 18px;
+            font-size: 32px;
+            margin-bottom: 30px;
+            color: #d4af37;
         }
         
         .highlight-box p {
-            font-size: 16px;
-            line-height: 1.8;
-            color: white;
+            font-size: 17px;
+            line-height: 2;
+            color: #c5c8cd;
         }
         
         /* Interview Quote */
         .interview-quote {
-            background: linear-gradient(135deg, #1e3a5f 0%, #2d5a8a 100%);
-            border-left: 5px solid #42a5f5;
-            padding: 30px 40px;
-            margin: 40px 0;
-            border-radius: 10px;
+            background: linear-gradient(135deg, #1a1d29 0%, #2d3142 100%);
+            border-left: 5px solid #d4af37;
+            padding: 40px 50px;
+            margin: 50px auto;
+            max-width: 900px;
+            border-radius: 15px;
             font-size: 20px;
             font-weight: normal;
-            font-style: normal;
-            color: #ffffff;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            color: #e8eaed;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
             text-align: center;
         }
         
         /* Curriculum Section */
         .curriculum-section {
-            padding: 80px 0;
-            background: linear-gradient(180deg, #0f1419 0%, #132f4c 100%);
+            padding: 100px 0;
+            background: linear-gradient(180deg, #0b0c10 0%, #1a1d29 100%);
         }
         
         .curriculum-list {
-            background: linear-gradient(135deg, #1e3a5f 0%, #2d5a8a 100%);
+            background: linear-gradient(135deg, #2d3142 0%, #1a1d29 100%);
             padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.4);
-            border: 1px solid rgba(66, 165, 245, 0.3);
-            max-width: 900px;
+            border-radius: 25px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.5);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            max-width: 1000px;
             margin: 0 auto;
         }
         
         .curriculum-item {
-            padding: 25px;
-            margin: 20px 0;
-            border-left: 4px solid #42a5f5;
-            background: rgba(30, 136, 229, 0.15);
-            border-radius: 8px;
+            padding: 35px;
+            margin: 25px 0;
+            border-left: 4px solid #d4af37;
+            background: rgba(212, 175, 55, 0.05);
+            border-radius: 12px;
             transition: all 0.3s ease;
             color: white;
             text-align: center;
         }
         
         .curriculum-item:hover {
-            background: rgba(30, 136, 229, 0.25);
+            background: rgba(212, 175, 55, 0.1);
             border-left-width: 8px;
-            box-shadow: 0 5px 15px rgba(66, 165, 245, 0.3);
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.2);
         }
         
         .curriculum-item h4 {
-            color: #42a5f5;
-            font-size: 20px;
-            margin-bottom: 10px;
-        }
-        
-        .curriculum-item p {
-            color: rgba(255, 255, 255, 0.9);
-        }
-        
-        /* Target Audience */
-        .target-section {
-            padding: 80px 0;
-            background: linear-gradient(180deg, #132f4c 0%, #1a1d29 100%);
-        }
-        
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-        
-        .info-card {
-            background: linear-gradient(135deg, #0a4d8f 0%, #1e88e5 100%);
-            color: white;
-            padding: 30px;
-            border-radius: 15px;
-            text-align: center;
-            box-shadow: 0 5px 20px rgba(30, 136, 229, 0.4);
-            border: 2px solid rgba(66, 165, 245, 0.3);
-            transition: all 0.3s ease;
-        }
-        
-        .info-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 30px rgba(30, 136, 229, 0.5);
-            border-color: rgba(66, 165, 245, 0.6);
-        }
-        
-        .info-card h3 {
+            color: #d4af37;
             font-size: 22px;
             margin-bottom: 15px;
         }
         
+        .curriculum-item p {
+            color: #c5c8cd;
+            font-size: 16px;
+            line-height: 1.9;
+        }
+        
+        /* Target Audience */
+        .target-section {
+            padding: 100px 0;
+            background: linear-gradient(180deg, #1a1d29 0%, #0b0c10 100%);
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .info-card {
+            background: linear-gradient(135deg, #2d3142 0%, #1a1d29 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            transition: all 0.4s ease;
+        }
+        
+        .info-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 50px rgba(212, 175, 55, 0.3);
+            border-color: rgba(212, 175, 55, 0.5);
+        }
+        
+        .info-card h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #d4af37;
+        }
+        
         .info-card p {
             font-size: 16px;
-            line-height: 1.6;
+            line-height: 1.7;
+            color: #c5c8cd;
         }
         
         /* Pricing Section */
         .pricing-section {
-            padding: 80px 0;
-            background: linear-gradient(180deg, #1a1d29 0%, #0f1419 100%);
+            padding: 100px 0;
+            background: linear-gradient(180deg, #0b0c10 0%, #1a1d29 100%);
             text-align: center;
         }
         
         .price-card {
-            background: linear-gradient(135deg, #1e3a5f 0%, #2d5a8a 100%);
-            max-width: 500px;
-            margin: 40px auto;
-            padding: 50px;
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
-            border: 2px solid rgba(66, 165, 245, 0.3);
+            background: linear-gradient(135deg, #2d3142 0%, #1a1d29 100%);
+            max-width: 650px;
+            margin: 50px auto;
+            padding: 60px;
+            border-radius: 25px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            border: 2px solid rgba(212, 175, 55, 0.3);
             text-align: center;
         }
         
         .original-price {
-            font-size: 24px;
+            font-size: 26px;
             text-decoration: line-through;
-            color: #999;
+            color: #6b6e76;
             margin-bottom: 10px;
         }
         
         .current-price {
-            font-size: 48px;
+            font-size: 56px;
             font-weight: 800;
-            color: #42a5f5;
-            margin-bottom: 10px;
+            background: linear-gradient(135deg, #d4af37 0%, #f4e5b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
         }
         
         .early-bird {
-            background: #ffc107;
-            color: #333;
-            padding: 10px 20px;
-            border-radius: 25px;
+            background: linear-gradient(135deg, #d4af37 0%, #c9a033 100%);
+            color: #0b0c10;
+            padding: 12px 25px;
+            border-radius: 30px;
             font-weight: 600;
             display: inline-block;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.4);
+        }
+        
+        .benefits-list {
+            background: rgba(212, 175, 55, 0.05);
+            padding: 35px;
+            border-radius: 20px;
+            margin-top: 40px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        
+        .benefits-list h4 {
+            color: #d4af37;
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
+        
+        .benefits-list ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .benefits-list li {
+            color: #c5c8cd;
+            padding: 12px 0;
+            font-size: 17px;
+            position: relative;
+            padding-left: 30px;
+        }
+        
+        .benefits-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #d4af37;
+            font-weight: bold;
+            font-size: 20px;
         }
         
         /* CTA Section */
         .final-cta {
-            padding: 80px 0;
-            background: linear-gradient(135deg, rgba(10, 77, 143, 0.40) 0%, rgba(30, 136, 229, 0.40) 100%),
-                        url('https://raw.githubusercontent.com/gongdae3dot0/test1-npu/main/0006.png') center/cover;
-            background-blend-mode: overlay;
+            padding: 100px 0;
+            background: linear-gradient(135deg, #1a1d29 0%, #2d3142 50%, #1a1d29 100%);
             color: white;
             text-align: center;
             position: relative;
+        }
+        
+        .final-cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 30% 40%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 70% 70%, rgba(212, 175, 55, 0.05) 0%, transparent 50%);
+            z-index: 0;
         }
         
         .final-cta > .container {
@@ -378,36 +464,40 @@
         }
         
         .final-cta h2 {
-            font-size: 42px;
+            font-size: 48px;
             margin-bottom: 30px;
+            background: linear-gradient(135deg, #ffffff 0%, #d4af37 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         
         .final-cta .cta-button-large {
-            background: white;
-            color: #0a4d8f;
-            padding: 20px 60px;
-            font-size: 24px;
+            background: linear-gradient(135deg, #d4af37 0%, #c9a033 100%);
+            color: #0b0c10;
+            padding: 25px 70px;
+            font-size: 26px;
             border-radius: 50px;
             text-decoration: none;
             display: inline-block;
             font-weight: 700;
-            margin-top: 20px;
+            margin-top: 30px;
             transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.4);
         }
         
         .final-cta .cta-button-large:hover {
             transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
-            background: #f0f8ff;
+            box-shadow: 0 20px 50px rgba(212, 175, 55, 0.6);
         }
         
         /* Footer */
         footer {
-            background: #2d3748;
-            color: white;
+            background: #0b0c10;
+            color: #c5c8cd;
             text-align: center;
-            padding: 40px 0;
+            padding: 50px 0;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
         }
         
         /* Responsive */
@@ -422,6 +512,7 @@
             
             .hero .tagline {
                 font-size: 22px;
+                padding: 20px 25px;
             }
             
             .section-title {
@@ -442,15 +533,51 @@
             }
             
             .curriculum-item {
-                padding: 20px;
-            }
-            
-            .highlight-box {
                 padding: 25px;
             }
             
+            .curriculum-item h4 {
+                font-size: 19px;
+            }
+            
+            .curriculum-item p {
+                font-size: 15px;
+                line-height: 1.8;
+            }
+            
+            .highlight-box {
+                padding: 30px 25px;
+            }
+            
             .highlight-box p {
-                font-size: 13px;
+                font-size: 14px;
+                line-height: 1.8;
+            }
+            
+            .interview-quote {
+                font-size: 17px;
+                padding: 25px;
+            }
+            
+            .price-card {
+                padding: 40px 25px;
+            }
+            
+            .benefits-list {
+                padding: 25px 20px;
+            }
+            
+            .benefits-list li {
+                font-size: 15px;
+            }
+            
+            .final-cta h2 {
+                font-size: 28px;
+            }
+            
+            .final-cta .cta-button-large {
+                padding: 18px 45px;
+                font-size: 20px;
             }
         }
         
@@ -484,10 +611,10 @@
     <section class="hero">
         <div class="container">
             <p class="subtitle" style="font-size: 18px; margin-bottom: 10px; opacity: 0.95; font-weight: 500;">엔지니어를 위한 특별한 성장 경험</p>            
-            <h1 class="fade-in">Mini-NPU Core RTL 설계 및 검증</h1>
+            <h1 class="fade-in">Mini-NPU Core RTL<br>설계 및 검증</h1>
             <p class="subtitle">공대삼쩜영이 스터디원을 모집합니다</p>
             <div class="badge">📋 면접 후 최종확정</div>
-            <p class="tagline">"딱 두 달, 현업 프로젝트 함께하기"</p>
+            <p class="tagline">"딱 2개월, 현업 프로젝트 함께하기"</p>
         </div>
     </section>
 
@@ -498,53 +625,44 @@
                 <div class="problem-card">
                     <div class="icon">⏱️</div>
                     <h3>단기 vs 장기 교육의 딜레마</h3>
-                    <p>1~3일짜리 단기 교육은 스펙이 안 되고<br>
-                        3개월 이상 교육은 학업과 병행하기 어렵습니다.</p>
-                </div>
-                <div class="problem-card">
-                    <div class="icon">📚</div>
-                    <h3>시간 투자 대비 낮은 효율</h3>
-                    <p>결국 시간과 노력은 투입되는데<br>
-                        실력은 기대만큼 쌓이지 않습니다.</p>
+                    <p>1~3일짜리 단기 교육은 스펙이 안 되고 3개월 이상 교육은 학업과 병행하기 어렵습니다.</p>
                 </div>
                 <div class="problem-card">
                     <div class="icon">💼</div>
                     <h3>취업에 부족한 경험</h3>
-                    <p>학교 전공수업, 캡스톤, 이론 강의만으로는<br>
-                        취업하기 힘들어진 세상입니다.</p>
+                    <p>학교 전공수업, 캡스톤, 이론 강의만으로는 취업하기 힘들어진 세상입니다.</p>
                 </div>
+                <div class="problem-card">
+                    <div class="icon">📚</div>
+                    <h3>규모가 큰 프로젝트 경험</h3>
+                    <p>학부연구생/인턴은 하고 싶어도 할 수 없는게 현실입니다.</p>
+                </div>                
             </div>
             
             <div class="highlight-box" style="margin-top: 60px;">
                 <h3>👨‍🏫<br>
-                    공대삼쩜영이 취준생에게</h3>
-                <p><strong>현업에선 말이야.</strong><br>
+                    To. 취준생</h3>
+                <p><strong>현업에선 말이야.<br></strong>
                     모든 개념을 완벽하게 배우고 시작하지 않아.<br>
                     오히려 모르는 상태로 부딪히면서 배우는게 훨씬 많지.<br>
                     칩 설계 구조도 제대로 모르는 상태에서 일단 디버깅을 시작해.<br>
-                    신호를 따라가다 보면 자연스럽게 구조를 익히게 되고<br>
-                    필요한 개념은 그때그때 찾아보면서 채우는 거야.<br>
+                    신호를 따라가다 보면 자연스럽게 구조를 익히게 되고 필요한 개념은 그때그때 찾아보면서 채우는 거야.<br>
                     <br>
-                    <strong>나도 Verilog 제로 베이스에서 시작했어.</strong><br>
+                <strong>나도 Verilog 제로 베이스에서 시작했어.<br></strong> 
                     실무 코드를 분석하면서 동시에 이론학습을 병행했어.<br>
-                    시간이 지나니까<br>
-                    그게 정말 효율적인 방식이었다는 걸 실감하게 되더라고.<br>
-                    심지어 입사 1~2년 만에 성과를 내면서<br>
-                    가장 높은 인사고과를 받기도 했어.<br>
+                    시간이 지나니까 그게 정말 효율적인 방식이었다는 걸 실감하게 되더라고.<br>
+                    심지어 입사 1~2년 만에 성과를 내면서 가장 높은 인사고과를 받기도 했어.<br>
                     신입이 가장 높은 고과를 받는다는건 진짜 쉽지 않은 일인데<br>
                     그만큼 실무에 빠르게 적응했다는 증거지.<br>
                     <br>
-                    <strong>지금부터 딱 두 달 동안 현업처럼 트레이닝 시켜줄게.</strong><br>
+                <strong>지금부터 딱 두 달 동안 현업처럼 트레이닝 시켜줄게.</strong><br>
                     이론부터 프로젝트까지 전부 커버할거야.<br>
-                    단순히 툴을 만지는 경험이 아니라,<br>
-                    회로설계 엔지니어가 실제로 하는 설계와 디버깅을<br>
-                    직접 해볼 수 있는 프로그램도 제공할 거야.<br>
-                    프로젝트 결과물은 그대로 네 개인 이력으로 연결되고,<br>
-                    자소서나 면접에서 자신 있게 꺼낼 수 있는<br>
-                    고퀄리티 이력으로 남을 거야.<br>
-                    <br>
-                    - 공대삼쩜영 -<br>
-                </p>
+                    단순히 툴을 만지는 경험이 아니라<br>
+                    회로설계 엔지니어가 실제로 하는 설계와 디버깅을 직접 해볼 수 있는 프로그램도 제공할 거야.<br>
+                    프로젝트 결과물은 그대로 네 개인 이력으로 연결되고<br>
+                    자소서나 면접에서 자신 있게 꺼낼 수 있는 고퀄리티 이력으로 남을 거야.<br>
+                    <br>                    
+                - 공대삼쩜영 -</p>
             </div>
         </div>
     </section>
@@ -552,19 +670,17 @@
     <section class="solution-section">
         <div class="container">
             <h2 class="section-title">그래서 준비했습니다</h2>
-            <p style="text-align: center; font-size: 20px; color: #e0e0e0; margin-bottom: 40px;">
-                딱 두 달 동안, 현업 방식 그대로<br>
-                Mini-NPU Core를 직접 설계하고 검증해보는 과정
+            <p style="text-align: center; font-size: 20px; color: #c5c8cd; margin-bottom: 40px;">
+                딱 두 달 동안, 현업 방식 그대로<br>Mini-NPU Core를 직접 설계하고 검증해보는 과정
             </p>            
             
-            <p style="text-align: center; font-size: 22px; font-weight: 600; color: #42a5f5; margin-top: 40px;">
-                이 과정을 따라오시면,<br>
-                면접장에서 이렇게 말할 수 있게 됩니다.
+            <p style="text-align: center; font-size: 24px; font-weight: 600; color: #d4af37; margin-top: 40px;">
+                이 과정을 따라오시면,<br>면접장에서 이렇게 말할 수 있게 됩니다.
             </p>
             
             <div class="interview-quote">
                 <p>"저는 NPU Core를 직접 설계하고 검증해본 경험이 있습니다."</p>
-                <p style="margin-top: 16px;">"2x2 Systolic MAC, Controller를 아우르는 전체 data-path를 설계하였고,<br>Testbench를 직접 구현하여 AMBA APB 환경에서 검증하였습니다."</p>
+                <p style="margin-top: 20px;">"2x2 Systolic MAC, Controller를 아우르는 전체 data-path를 설계하였고,<br>Testbench를 직접 구현하여 AMBA APB 환경에서 검증하였습니다."</p>
             </div>
         </div>
     </section>
@@ -581,15 +697,15 @@
                 <div class="curriculum-item">
                     <h4>2️⃣ RTL 설계 - VerilogHDL</h4>
                     <p>실제 NPU 칩의 동작 시나리오를 축소 모델로 구현<br>
-                    NPU Core 기초 설계 듀토리얼 - PE 설계<br>
-                    단일 PE를 2D Systolic 구조로 확장<br>
-                    NPU Controller 설계</p>
+                        NPU Core 기초 설계 튜토리얼 - PE 설계<br>
+                        단일 PE를 2D Systolic 구조로 확장<br>
+                        NPU Controller 설계</p>
                 </div>
                 <div class="curriculum-item">
                     <h4>3️⃣ 실무 검증 - SystemVerilog</h4>
                     <p>실전 Simulation 검증 환경 구축<br>
-                    Self-checking Testbench 구현<br>
-                    AMBA APB 기반 검증 환경 구축 및 시뮬레이션</p>
+                        Self-checking Testbench 구현<br>
+                        AMBA APB 기반 검증 환경 구축 및 시뮬레이션</p>
                 </div>
             </div>
         </div>
@@ -602,17 +718,17 @@
                 <div class="info-card">
                     <h3>참여 대상</h3>
                     <p>반도체 회로설계 진로를 희망하는<br>3학년 이상 학생</p>
-                    <p style="margin-top: 15px; font-size: 14px; opacity: 0.9;">선수과목: 디지털논리, VerilogHDL 연관 교과목</p>
+                    <p style="margin-top: 15px; font-size: 14px; opacity: 0.8;">선수과목: 디지털논리, VerilogHDL 연관 교과목</p>
                 </div>
                 <div class="info-card">
                     <h3>진행 방식</h3>
                     <p>매주 1회 Zoom 강의 & 과제 점검</p>
-                    <p style="margin-top: 15px; font-size: 14px; opacity: 0.9;">평일 19시 이후 시간 조율<br>사수-부사수 관계로 실질적 설계 참여</p>
+                    <p style="margin-top: 15px; font-size: 14px; opacity: 0.8;">평일 19시 이후 시간 조율<br>사수-부사수 관계로 실질적 설계 참여</p>
                 </div>
                 <div class="info-card">
                     <h3>사전 면접</h3>
                     <p>레벨 테스트 + 유선 통화로<br>스터디원 확정</p>
-                    <p style="margin-top: 15px; font-size: 14px; opacity: 0.9;">단순 전달식 강의가 아닌<br>직접 참여하는 프로젝트</p>
+                    <p style="margin-top: 15px; font-size: 14px; opacity: 0.8;">단순 전달식 강의가 아닌<br>직접 참여하는 프로젝트</p>
                 </div>
             </div>
         </div>
@@ -625,9 +741,19 @@
                 <div class="original-price">400,000원</div>
                 <div class="early-bird">🎁 얼리버드 할인</div>
                 <div class="current-price">360,000원</div>
-                <p style="color: #e0e0e0; margin-top: 20px; font-size: 16px;">
+                
+                <div class="benefits-list">
+                    <h4>🎁 얼리버드 특별 혜택</h4>
+                    <ul>
+                        <li>회로설계 고퀄리티 자소서 제공</li>
+                        <li>직무 면접 문제풀이 복기본 제공</li>
+                        <li>합격한 이력서 재구성본 제공</li>
+                    </ul>
+                </div>
+                
+                <p style="color: #c5c8cd; margin-top: 40px; font-size: 17px;">
                     📅 예상 일정: 12월 초중순 시작 ~ 2월 중 완료<br>
-                    <span style="font-size: 14px; opacity: 0.8;">(인원 모집 상황에 따라 변동될 수 있습니다)</span>
+                    <span style="font-size: 14px; opacity: 0.7;">(인원 모집 상황에 따라 변동될 수 있습니다)</span>
                 </p>
             </div>
         </div>
@@ -635,15 +761,16 @@
 
     <section class="final-cta" id="apply">
         <div class="container">
-            <h2>딱 두 달만, 현업처럼 부딪혀보는 프로젝트.</h2>
-            <p style="font-size: 20px; margin: 20px 0; opacity: 0.95;">
-                반도체 회로설계, 단기교육과 장기교육 사이에서 고민하고 계신가요?<br>
+            <h2>딱 2개월 간, 현업처럼 부딪혀보는 프로젝트</h2>
+            <p style="font-size: 22px; margin: 20px 0; opacity: 0.9; color: #c5c8cd;">
+                반도체 회로설계<br>
+                단기교육과 장기교육 사이에서 고민하고 계신가요?<br>
                 그렇다면 선택지는 하나입니다.
             </p>
             <a href="https://smartstore.naver.com/gongdae3_0/products/12435073029" class="cta-button-large">지금 신청하기 →</a>
-            <p style="font-size: 16px; margin-top: 30px; opacity: 0.9;">
-                📩 문의: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5d3a32333a393c386e736d1d3a303c3431733e3230">[email&#160;protected]</a><br>
-                💬 <a href="https://open.kakao.com/o/sZ1Dm4zf" style="color: #ffc107; text-decoration: underline; font-weight: 600;">카카오톡 오픈채팅으로 문의하기</a>
+            <p style="font-size: 17px; margin-top: 40px; opacity: 0.9; color: #c5c8cd;">
+                📩 문의: gongdae3.0@gmail.com<br>
+                💬 <a href="https://open.kakao.com/o/sZ1Dm4zf" style="color: #d4af37; text-decoration: underline; font-weight: 600;">카카오톡 오픈채팅으로 문의하기</a>
             </p>
         </div>
     </section>
@@ -651,13 +778,13 @@
     <footer>
         <div class="container">
             <p>&copy; 2025 공대삼쩜영. All rights reserved.</p>
-            <p style="margin-top: 10px; font-size: 14px; opacity: 0.8;">
+            <p style="margin-top: 10px; font-size: 14px; opacity: 0.7;">
                 엔지니어를 위한 특별한 성장 경험
             </p>
         </div>
     </footer>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    <script>
         // Smooth scroll for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -688,4 +815,12 @@
         }, observerOptions);
 
         // Apply animation to sections
-        document.querySelectorAll('.problem-card, .curriculum-item, .info-card').forEa
+        document.querySelectorAll('.problem-card, .curriculum-item, .info-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease-out';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
